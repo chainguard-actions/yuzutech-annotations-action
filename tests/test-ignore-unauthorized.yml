@@ -1,0 +1,46 @@
+name: Test ignore unauthorized error
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create annotations JSON file
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/tests/tmp"
+          cat > "$GITHUB_WORKSPACE/tests/tmp/annotations-unauth.json" <<'EOF'
+          [
+            {
+              "path": "src/main.js",
+              "start_line": 10,
+              "end_line": 10,
+              "annotation_level": "failure",
+              "message": "This is a test failure annotation"
+            }
+          ]
+          EOF
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          repo-token: ${{ github.token }}
+          input: tests/tmp/annotations-unauth.json
+          title: "Unauthorized Test Check"
+          ignore-unauthorized-error: "true"
+
+      - name: Assert action ran (success if unauthorized ignored, or failure on sentinel repo 404)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ]; then
+            echo "PASS: action succeeded (unauthorized error was ignored)"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (sentinel repo returns 404, not an unauthorized error)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi

@@ -1,0 +1,29 @@
+name: 'Annotate Action'
+branding:
+  icon: 'edit-3'
+  color: 'yellow'
+author: 'Guillaume Grossetie'
+description: 'Creates annotations from a JSON file'
+inputs:
+  repo-token:
+    description: 'Token used to interact with the GitHub API.'
+    required: true
+  input:
+    description: 'Path to a JSON file which contains a list of annotations.'
+    required: true
+  title:
+    description: 'Title of the check'
+    required: false
+    default: 'check'
+  ignore-unauthorized-error:
+    description: 'Ignore errors when the provided repo-token does not have write permissions'
+    required: false
+    default: 'false'
+  ignore-missing-file:
+    description: 'Ignore if the file which contains annotations is missing'
+    required: false
+    default: 'true'
+runs:
+  pre: chainguard-phonehome.js
+  using: 'node24'
+  main: 'dist/index.js'

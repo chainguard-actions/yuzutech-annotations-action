@@ -6,9 +6,9 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v0.6.0 | [`v0.6.0`](https://github.com/chainguard-actions/yuzutech-annotations-action/tree/v0.6.0) | [`00b2d48`](https://github.com/yuzutech/annotations-action/commit/00b2d488bcba3bd01014dc073d276ef4a45d5c6c) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v0.6.0 | [`v0.6.0`](https://github.com/chainguard-actions/yuzutech-annotations-action/tree/v0.6.0) | [`00b2d48`](https://github.com/yuzutech/annotations-action/commit/00b2d488bcba3bd01014dc073d276ef4a45d5c6c) | [`HARDENING.md`](https://github.com/chainguard-actions/yuzutech-annotations-action/blob/v0.6.0/HARDENING.md) |
 
 ## Privacy
 
